@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Administración | Cosméticos Multimarca</title>
+<style>
+:root{--vino:#64243f;--fucsia:#d12670;--oro:#c99b43;--crema:#fff8ef;--texto:#392a31;--verde:#13865f}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--texto);background:linear-gradient(180deg,#fffaf7,#fff0f5)}
+.wrap{max-width:920px;margin:auto;padding:28px 18px 60px}
+header{background:linear-gradient(120deg,#531a38,#8a2e5a,#c14779);color:#fff;padding:30px 0}
+h1,h2{font-family:Georgia,serif}h1{margin:0;font-size:38px}h2{color:var(--vino);margin-top:0}
+.card{background:#fff;border:1px solid #efd3dd;border-radius:24px;padding:22px;margin-top:18px;box-shadow:0 10px 28px rgba(93,37,62,.08)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{font-weight:800;font-size:13px;display:block}input[type=email],input[type=password],input[type=url]{width:100%;padding:12px;border:1px solid #e6c8d3;border-radius:12px;margin-top:6px;font-size:15px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border:0;border-radius:14px;font-weight:900;cursor:pointer}
+.pink{color:#fff;background:linear-gradient(135deg,var(--fucsia),var(--vino))}
+.green{color:#fff;background:linear-gradient(135deg,#28ad7d,#13865f)}
+.gray{background:#f3e9ed;color:var(--vino)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.muted{color:#806b73;line-height:1.5}
+.preview{width:150px;height:150px;border-radius:50%;overflow:hidden;background:#fff4f7;border:5px solid #fff;box-shadow:0 8px 20px rgba(92,27,58,.18);display:flex;align-items:center;justify-content:center;text-align:center;color:#9d5571;font-weight:800}
+.preview img{width:100%;height:100%;object-fit:cover;display:none}
+.news-preview{width:100%;max-width:520px;min-height:230px;border-radius:18px;overflow:hidden;background:#fff4f7;display:flex;align-items:center;justify-content:center;text-align:center;color:#9d5571}
+.news-preview img{width:100%;height:100%;min-height:230px;object-fit:cover;display:none}
+.status{padding:12px 14px;border-radius:12px;background:#fff8e8;color:#6b4b12;margin-top:12px;display:none}
+.danger{color:#9c214d}
+.hidden{display:none!important}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.wrap{padding-left:14px;padding-right:14px}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Administración de Cosméticos Multimarca</h1><p style="margin:8px 0 0">Aquí Nasly podrá cambiar su foto, la promoción y los enlaces de campaña.</p></div></header>
+
+<main class="wrap">
+<section id="loginCard" class="card">
+<h2>Entrar</h2>
+<p class="muted">Este acceso es privado. Usa el correo y la contraseña creados en Supabase para la administradora.</p>
+<div class="grid">
+<label>Correo<input id="loginEmail" type="email" autocomplete="username"></label>
+<label>Contraseña<input id="loginPassword" type="password" autocomplete="current-password"></label>
+</div>
+<div class="row" style="margin-top:14px"><button id="loginBtn" class="btn pink">Entrar</button><a class="btn gray" href="index.html">Ver página pública</a></div>
+<div id="loginStatus" class="status"></div>
+</section>
+
+<section id="panel" class="hidden">
+<div class="card">
+<div class="row" style="justify-content:space-between"><div><h2 style="margin-bottom:4px">Panel de Nasly</h2><div id="sessionEmail" class="muted"></div></div><button id="logoutBtn" class="btn gray">Cerrar sesión</button></div>
+<div id="panelStatus" class="status"></div>
+</div>
+
+<div class="card">
+<h2>1. Mi foto</h2>
+<p class="muted">Sube una foto nueva. La página pública mostrará automáticamente la última foto guardada.</p>
+<div class="row">
+<div class="preview"><span id="profilePreviewText">Sin foto</span><img id="profilePreview"></div>
+<div>
+<input id="profileFile" type="file" accept="image/jpeg,image/png,image/webp">
+<div class="row" style="margin-top:12px"><button id="uploadProfileBtn" class="btn pink">Subir / cambiar foto</button><button id="removeProfileBtn" class="btn gray">Quitar foto</button></div>
+<p class="muted">Recomendado: JPG o PNG, máximo 6 MB.</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>2. Novedades</h2>
+<p class="muted">Carga una imagen de promoción cuando tengas una campaña. Si no hay promoción, puedes quitarla y la tarjeta volverá al estado normal.</p>
+<div class="news-preview"><span id="newsPreviewText">Sin promoción activa</span><img id="newsPreview"></div>
+<div class="row" style="margin-top:14px">
+<input id="newsFile" type="file" accept="image/jpeg,image/png,image/webp">
+<button id="uploadNewsBtn" class="btn pink">Subir / cambiar promoción</button>
+<button id="removeNewsBtn" class="btn gray">Quitar promoción</button>
+</div>
+<p class="muted">Recomendado: JPG o PNG, máximo 6 MB.</p>
+</div>
+
+<div class="card">
+<h2>3. Catálogos y redes</h2>
+<p class="muted">Aquí se cambian los enlaces cuando llegue una nueva campaña. El cliente seguirá viendo solo el botón “Ver catálogo”.</p>
+<div class="grid">
+<label>Natura<input id="natura" type="url" placeholder="https://..."></label>
+<label>Avon<input id="avon" type="url" placeholder="https://..."></label>
+<label>O Boticário<input id="boticario" type="url" placeholder="https://..."></label>
+<label>Carmel · Pacifika · Loguin<input id="moda" type="url" placeholder="https://..."></label>
+<label>Gosén<input id="gosen" type="url" placeholder="https://..."></label>
+<label>Facebook<input id="facebook" type="url" placeholder="https://facebook.com/..."></label>
+<label>Threads<input id="threads" type="url" placeholder="https://threads.com/@..."></label>
+</div>
+<div class="row" style="margin-top:16px"><button id="saveLinksBtn" class="btn pink">Guardar enlaces</button></div>
+</div>
+
+<div class="card">
+<h2>4. Publicar y comprobar</h2>
+<p class="muted">Los cambios de contenido se guardan en Supabase. La página pública los leerá al abrirse. Si cambiamos el código de la página, eso sí se publica desde GitHub.</p>
+<a class="btn green" href="index.html" target="_blank">Abrir página pública</a>
+</div>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+const defaults={
+  natura:'https://linktr.ee/consultoriadebellezacolombia',
+  avon:'https://linktr.ee/consultoriadebellezacolombia',
+  boticario:'https://www.catalogoboticario.com/2026-catalogo-colombia/cat-col-t9-sep-226/?page=1',
+  moda:'https://catalogo.carmel.com.co/2026c13/multi/c13ed01-2026/',
+  gosen:'',
+  facebook:'https://www.facebook.com/share/1KMYdzRfwn/',
+  threads:'https://www.threads.com/@naslygutierrezteran'
+};
+const fields=['natura','avon','boticario','moda','gosen','facebook','threads'];
+let supabaseClient=null,currentSettings=null;
+
+function status(id,msg,show=true){
+  const el=document.getElementById(id); if(!el)return;
+  el.textContent=msg; el.style.display=show?'block':'none';
+}
+function validUrl(v){if(!v)return true;try{const u=new URL(v);return u.protocol==='http:'||u.protocol==='https:';}catch{return false;}}
+
+async function init(){
+  if(!window.supabase || !window.SUPABASE_URL || window.SUPABASE_URL.includes('PEGA_AQUI')){
+    status('loginStatus','Primero hay que configurar supabase-config.js con la URL y la clave pública del proyecto.',true);
+    document.getElementById('loginBtn').disabled=true; return;
+  }
+  supabaseClient=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_PUBLISHABLE_KEY);
+  const {data:{session}}=await supabaseClient.auth.getSession();
+  if(session)showPanel(session); else showLogin();
+  supabaseClient.auth.onAuthStateChange((_event,session)=>{if(session)showPanel(session);else showLogin();});
+}
+function showLogin(){
+  document.getElementById('loginCard').classList.remove('hidden');
+  document.getElementById('panel').classList.add('hidden');
+}
+async function showPanel(session){
+  document.getElementById('loginCard').classList.add('hidden');
+  document.getElementById('panel').classList.remove('hidden');
+  document.getElementById('sessionEmail').textContent=session.user.email||'Sesión activa';
+  await loadSettings();
+}
+async function login(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const password=document.getElementById('loginPassword').value;
+  if(!email||!password){status('loginStatus','Escribe el correo y la contraseña.');return;}
+  const {error}=await supabaseClient.auth.signInWithPassword({email,password});
+  if(error)status('loginStatus','No fue posible entrar: '+error.message); else status('loginStatus','',false);
+}
+async function logout(){await supabaseClient.auth.signOut();}
+
+async function loadSettings(){
+  const {data,error}=await supabaseClient.from('nasly_site_settings').select('*').eq('id',1).maybeSingle();
+  if(error){status('panelStatus','No se pudo leer la configuración: '+error.message);return;}
+  currentSettings=data||{};
+  fields.forEach(k=>document.getElementById(k).value=currentSettings[k+'_url']||defaults[k]||'');
+  applyProfile(currentSettings.profile_photo_url||'');
+  applyNews(currentSettings.news_image_url||'');
+}
+function applyProfile(url){
+  const img=document.getElementById('profilePreview'),txt=document.getElementById('profilePreviewText');
+  if(url){img.src=url;img.style.display='block';txt.style.display='none';}else{img.style.display='none';img.removeAttribute('src');txt.style.display='block';}
+}
+function applyNews(url){
+  const img=document.getElementById('newsPreview'),txt=document.getElementById('newsPreviewText');
+  if(url){img.src=url;img.style.display='block';txt.style.display='none';}else{img.style.display='none';img.removeAttribute('src');txt.style.display='block';}
+}
+async function uploadImage(file,kind){
+  if(!file){status('panelStatus','Selecciona primero una imagen.');return;}
+  if(!['image/jpeg','image/png','image/webp'].includes(file.type)){status('panelStatus','Usa JPG, PNG o WebP.');return;}
+  if(file.size>6*1024*1024){status('panelStatus','La imagen supera 6 MB. Elige una más liviana.');return;}
+  const ext=file.type==='image/png'?'png':file.type==='image/webp'?'webp':'jpg';
+  const path=kind+'/'+Date.now()+'-'+crypto.randomUUID()+'.'+ext;
+  const {error:uploadError}=await supabaseClient.storage.from('nasly-media').upload(path,file,{cacheControl:'3600',contentType:file.type,upsert:false});
+  if(uploadError){status('panelStatus','No se pudo subir la imagen: '+uploadError.message);return;}
+  const {data:urlData}=supabaseClient.storage.from('nasly-media').getPublicUrl(path);
+  const url=urlData.publicUrl;
+  const patch=kind==='profile'
+    ? {profile_photo_url:url,profile_photo_path:path}
+    : {news_image_url:url,news_image_path:path};
+  const {error:dbError}=await supabaseClient.from('nasly_site_settings').update(patch).eq('id',1);
+  if(dbError){status('panelStatus','La imagen se subió, pero no se pudo guardar la referencia: '+dbError.message);return;}
+  currentSettings={...(currentSettings||{}),...patch};
+  if(kind==='profile')applyProfile(url);else applyNews(url);
+  status('panelStatus','Cambio guardado correctamente.');
+}
+async function removeImage(kind){
+  const path=kind==='profile'?currentSettings?.profile_photo_path:currentSettings?.news_image_path;
+  const patch=kind==='profile'
+    ? {profile_photo_url:null,profile_photo_path:null}
+    : {news_image_url:null,news_image_path:null};
+  if(path){await supabaseClient.storage.from('nasly-media').remove([path]);}
+  const {error}=await supabaseClient.from('nasly_site_settings').update(patch).eq('id',1);
+  if(error){status('panelStatus','No se pudo quitar la imagen: '+error.message);return;}
+  currentSettings={...(currentSettings||{}),...patch};
+  if(kind==='profile')applyProfile('');else applyNews('');
+  status('panelStatus',kind==='profile'?'Foto quitada.':'Promoción quitada.');
+}
+async function saveLinks(){
+  const patch={};
+  for(const k of fields){
+    const v=document.getElementById(k).value.trim();
+    if(!validUrl(v)){status('panelStatus','El enlace de '+k+' no es válido. Debe comenzar por https:// o http://');return;}
+    patch[k+'_url']=v||null;
+  }
+  const {error}=await supabaseClient.from('nasly_site_settings').update(patch).eq('id',1);
+  if(error){status('panelStatus','No se pudieron guardar los enlaces: '+error.message);return;}
+  currentSettings={...(currentSettings||{}),...patch};
+  status('panelStatus','Enlaces guardados correctamente.');
+}
+document.getElementById('loginBtn').addEventListener('click',login);
+document.getElementById('logoutBtn').addEventListener('click',logout);
+document.getElementById('loginPassword').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
+document.getElementById('uploadProfileBtn').addEventListener('click',()=>uploadImage(document.getElementById('profileFile').files[0],'profile'));
+document.getElementById('removeProfileBtn').addEventListener('click',()=>removeImage('profile'));
+document.getElementById('uploadNewsBtn').addEventListener('click',()=>uploadImage(document.getElementById('newsFile').files[0],'news'));
+document.getElementById('removeNewsBtn').addEventListener('click',()=>removeImage('news'));
+document.getElementById('saveLinksBtn').addEventListener('click',saveLinks);
+init();
+</script>
+</body>
+</html>
