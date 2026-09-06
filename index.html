@@ -91,7 +91,7 @@ section{padding:52px 0}
 .panel-title{font-family:Georgia,serif;font-size:30px;margin:0 0 18px}
 .contact-flex{display:flex;gap:20px;align-items:center}
 .photo-wrap{width:135px;min-width:135px;height:135px;border-radius:50%;padding:5px;background:linear-gradient(135deg,#fff,#d9a2b5,#fff);box-shadow:0 10px 24px rgba(92,27,58,.25)}
-#naslyPhoto{width:100%;height:100%;border-radius:50%;object-fit:cover;display:none}
+#naslyPhoto{width:100%;height:100%;border-radius:50%;object-fit:cover;display:none;opacity:1;filter:none;}
 .photo-placeholder{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:#fff4f7;color:#9d5571;font-size:12px;font-weight:800;padding:12px}
 .upload-photo{margin-top:12px;padding:10px 14px;border-radius:14px;border:0;background:linear-gradient(135deg,var(--fucsia),var(--vino));color:#fff;font-weight:900;cursor:pointer}
 .news .photo-wrap{width:100%;min-width:0;height:100%;padding:0;border-radius:0;background:none;box-shadow:none}
@@ -144,7 +144,7 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 .novedades-panel .panel-title{color:var(--vino);margin-bottom:16px}
 .news-preview{position:relative;min-height:280px;border-radius:20px;overflow:hidden;background:rgba(255,255,255,.72);border:2px dashed #c77b9a;display:grid;place-items:center}
 .news-preview label{width:100%;min-height:280px;display:grid;place-items:center;padding:24px;cursor:pointer;color:#8d214b;font-weight:900;font-size:17px;line-height:1.5}
-#newsPhoto{width:100%;height:100%;min-height:280px;max-height:560px;object-fit:contain;display:none;background:#fff}
+#newsPhoto{width:100%;height:100%;min-height:280px;max-height:560px;object-fit:cover;display:none;background:#fff}
 
 
 .business-name{
@@ -222,6 +222,15 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 <footer><div class="wrap footer-content"><div class="footer-brand">COSMÉTICOS MULTIMARCA</div><div class="footer-tag">Belleza, aromas y estilo</div><div class="footer-text">Belleza que inspira, estilo que expresa y abundancia que transforma.</div><div class="footer-verse">“Encomienda al Señor tus obras, y tus pensamientos serán afirmados.”<strong>PROVERBIOS 16:3</strong></div></div></footer>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+window.SUPABASE_URL = 'https://xahedodwlekcjogriwue.supabase.co';
+window.SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_2NakMYk1zr-Fs8mrur_0ag_qkP8VblE';
+window.supabaseClient = window.supabase.createClient(
+  window.SUPABASE_URL,
+  window.SUPABASE_PUBLISHABLE_KEY
+);
+</script>
 <script>
 const phone='573017481422';
 const makeWa=t=>'javascript:openWhatsApp('+JSON.stringify(t)+')';
@@ -229,24 +238,93 @@ function openWhatsApp(t){
  const msg='Hola Nasly 😊 Vi tu página y quiero consultar sobre '+t+'.';
  const app='whatsapp://send?phone='+phone+'&text='+encodeURIComponent(msg);
  window.location.href=app;
- setTimeout(()=>{ if(document.visibilityState==='visible'){ window.open('https://api.whatsapp.com/send?phone='+phone+'&text='+encodeURIComponent(msg),'_blank'); }},900);
+ setTimeout(()=>{ if(document.visibilityState==='visible'){ window.open('https://api.whatsapp.com/send?phone='+phone+'&text='+encodeURIComponent(msg),'_blank','noopener'); }},900);
 }
-document.querySelectorAll('.wbtn').forEach(a=>a.href=makeWa(a.dataset.text));
-document.getElementById('heroWa').href=makeWa('tus productos');
-const newsWa=document.getElementById('newsWa'); if(newsWa) newsWa.href='javascript:openWhatsApp('+JSON.stringify(msg)+')';
-document.getElementById('contactWa').href=makeWa('un pedido');
-document.getElementById('navWa').href=makeWa('tus productos');
-const newsWa=document.getElementById('newsWa');
-if(newsWa){newsWa.addEventListener('click',e=>{e.preventDefault();const msg='Hola, me interesa este producto. Quisiera recibir más información.';const url='https://api.whatsapp.com/send?phone='+phone+'&text='+encodeURIComponent(msg);window.open(url,'_blank');});}
 
+const defaults={
+ natura:'https://linktr.ee/consultoriadebellezacolombia',
+ avon:'https://linktr.ee/consultoriadebellezacolombia',
+ boticario:'https://www.catalogoboticario.com/2026-catalogo-colombia/cat-col-t9-sep-226/?page=1',
+ moda:'https://catalogo.carmel.com.co/2026c13/multi/c13ed01-2026/',
+ gosen:''
+};
+const keys=Object.keys(defaults);
 
+function applyCatalogLink(k,v){
+ const a=document.querySelector('[data-cat="'+k+'"]');
+ if(!a)return;
+ if(v){
+   a.href=v; a.target='_blank'; a.classList.remove('pending');
+   a.style.pointerEvents=''; a.style.opacity='';
+ }else{
+   a.removeAttribute('href'); a.classList.add('pending');
+   a.style.pointerEvents='none'; a.style.opacity='.7';
+ }
+}
 
+function applyPhoto(url){
+ const img=document.getElementById('naslyPhoto');
+ const ph=document.getElementById('photoPlaceholder');
+ if(!img)return;
+ if(url){
+   img.src=url; img.style.display='block';
+   if(ph)ph.style.display='none';
+ }else{
+   img.removeAttribute('src'); img.style.display='none';
+   if(ph){ph.style.display='flex'; ph.innerHTML='📷<br>Foto de Nasly';}
+ }
+}
 
+function applyNews(url){
+ const img=document.getElementById('newsPhoto');
+ if(!img)return;
+ if(url){
+   img.onload=()=>{img.style.display='block';};
+   img.onerror=()=>{img.style.display='none';};
+   img.src=url;
+ }else{
+   img.removeAttribute('src');
+   img.style.display='none';
+ }
+}
+
+async function loadPublicSettings(){
+ if(typeof supabaseClient==='undefined' || !supabaseClient)return;
+ try{
+   const {data,error}=await supabaseClient
+     .from('nasly_site_settings')
+     .select('*')
+     .eq('id',1)
+     .maybeSingle();
+   if(error)throw error;
+   if(!data)return;
+   keys.forEach(k=>applyCatalogLink(k,data[k+'_url']||defaults[k]));
+   applyPhoto(data.profile_photo_url||'');
+   applyNews(data.news_image_url||'');
+ }catch(err){
+   console.warn('No fue posible cargar la configuración remota:',err);
+   keys.forEach(k=>applyCatalogLink(k,defaults[k]));
+ }
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+ document.querySelectorAll('.wbtn').forEach(a=>a.href=makeWa(a.dataset.text));
+ const heroWa=document.getElementById('heroWa');
+ if(heroWa)heroWa.href=makeWa('tus productos');
+ const contactWa=document.getElementById('contactWa');
+ if(contactWa)contactWa.href=makeWa('un pedido');
+ const navWa=document.getElementById('navWa');
+ if(navWa)navWa.href=makeWa('tus productos');
+ const newsWa=document.getElementById('newsWa');
+ if(newsWa)newsWa.href=makeWa('las novedades y promociones');
+ loadPublicSettings();
+ const b=document.getElementById('nequiToggle'),n=document.getElementById('nequiNumber');
+ if(b&&n)b.addEventListener('click',function(){
+   const open=n.hasAttribute('hidden');
+   if(open){n.removeAttribute('hidden');b.setAttribute('aria-expanded','true');}
+   else{n.setAttribute('hidden','');b.setAttribute('aria-expanded','false');}
+ });
+});
 </script>
 
-
-
-<script>
-document.addEventListener("DOMContentLoaded",function(){const b=document.getElementById("nequiToggle"),n=document.getElementById("nequiNumber");if(b&&n)b.addEventListener("click",function(){const open=n.hasAttribute("hidden");if(open){n.removeAttribute("hidden");b.setAttribute("aria-expanded","true");}else{n.setAttribute("hidden","");b.setAttribute("aria-expanded","false");}});});
-</script>
 </body></html>
