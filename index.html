@@ -94,12 +94,10 @@ section{padding:52px 0}
 #naslyPhoto{width:100%;height:100%;border-radius:50%;object-fit:cover;display:none}
 .photo-placeholder{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:#fff4f7;color:#9d5571;font-size:12px;font-weight:800;padding:12px}
 .upload-photo{margin-top:12px;padding:10px 14px;border-radius:14px;border:0;background:linear-gradient(135deg,var(--fucsia),var(--vino));color:#fff;font-weight:900;cursor:pointer}
-#photoInput{display:none}
 .news .photo-wrap{width:100%;min-width:0;height:100%;padding:0;border-radius:0;background:none;box-shadow:none}
 .contact-data p{margin:7px 0;font-weight:600}
 .pay-items{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pay-item{background:rgba(255,255,255,.52);padding:15px;border-radius:17px;font-weight:800;font-size:17px}
 .nequi-box{margin-top:15px;background:rgba(255,255,255,.66);padding:16px;border-radius:18px}.nequi-number{font-size:25px;font-weight:900;color:var(--vino)}.nequi-toggle{border:0;width:100%;text-align:left;cursor:pointer;font-family:inherit;color:inherit}.nequi-number{grid-column:1/-1;text-align:center}
-.admin{border-radius:24px;padding:24px;background:linear-gradient(135deg,#fff0f5,#ffd4e4 52%,#f8d59a);border:2px dashed #b65c82;box-shadow:0 14px 30px rgba(154,65,110,.12)}.admin summary{cursor:pointer;font-weight:900;color:var(--vino)}.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}.admin label{font-size:12px;font-weight:900}.admin input{width:100%;padding:11px;border:1px solid #e6c8d3;border-radius:12px;margin-top:4px}
 footer{margin-top:25px;padding:40px 0 85px;position:relative;overflow:hidden;color:#fff;background:linear-gradient(120deg,#531a38,#8a2e5a,#c14779)}
 footer:before,footer:after{position:absolute;font-size:70px;color:#f5a4bc;opacity:.7}footer:before{content:"✿ ✿";left:15px;bottom:0}footer:after{content:"✿ ✿";right:15px;bottom:0}
 .footer-content{position:relative;text-align:center}.footer-brand{font-family:Georgia,serif;font-size:38px;background:linear-gradient(110deg,#f6d58b,#fff0b6,#c7953c);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -107,7 +105,7 @@ footer:before,footer:after{position:absolute;font-size:70px;color:#f5a4bc;opacit
 .footer-text{max-width:580px;margin:18px auto 0;line-height:1.6;color:#ffe8ef}
 
 @media(max-width:800px){.hero-grid,.info{grid-template-columns:1fr}.catalogs{grid-template-columns:1fr 1fr}.collage-box{height:330px}.steps{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.catalogs{grid-template-columns:1fr}.steps,.admin-grid{grid-template-columns:1fr}.contact-flex{align-items:flex-start}.hero{padding-top:30px}.navbrand{font-size:14px}.btn{padding:11px 14px}.pay-items{grid-template-columns:1fr}}
+@media(max-width:520px){.catalogs{grid-template-columns:1fr}.steps,.contact-flex{align-items:flex-start}.hero{padding-top:30px}.navbrand{font-size:14px}.btn{padding:11px 14px}.pay-items{grid-template-columns:1fr}}
 
 .social-row{display:flex;gap:14px;justify-content:center;margin-top:18px}
 .social-btn{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:28px;font-weight:900;text-decoration:none;box-shadow:0 8px 18px rgba(80,20,50,.18)}
@@ -147,8 +145,6 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 .news-preview{position:relative;min-height:280px;border-radius:20px;overflow:hidden;background:rgba(255,255,255,.72);border:2px dashed #c77b9a;display:grid;place-items:center}
 .news-preview label{width:100%;min-height:280px;display:grid;place-items:center;padding:24px;cursor:pointer;color:#8d214b;font-weight:900;font-size:17px;line-height:1.5}
 #newsPhoto{width:100%;height:100%;min-height:280px;max-height:560px;object-fit:contain;display:none;background:#fff}
-#newsInput{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.news-actions{margin-top:16px}
 
 
 .business-name{
@@ -173,14 +169,6 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 </style>
 
 
-<style id="novedades-grid-placement">
-.card.novedades-card{display:flex;min-width:0}
-.card.novedades-card .card-body{width:100%;display:flex;flex-direction:column}
-.card.novedades-card .novedades-panel{width:100%;height:100%;display:flex;flex-direction:column}
-.card.novedades-card .news-preview{flex:1;min-height:220px}
-.card.novedades-card #newsInput{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.card.novedades-card .news-actions{margin-top:auto}
-</style>
 
 </head>
 <body>
@@ -211,7 +199,7 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 <article class="card"><div class="card-img natura"></div><div class="card-body"><h3>Natura</h3><p>Belleza, cuidado personal, aromas y bienestar.</p><div class="actions"><a class="catalog-btn pending catlink" data-cat="natura" href="https://linktr.ee/consultoriadebellezacolombia?fbclid=IwAR6zaoQKDXobeoZlc1zPSMQ9OiQz1erLPmV934Ulq8XeWWNLVZc0wQf6jBA2hw_wapm_mzJ1aJBWSlCuzNsjAQv1Nw_waaem_8e_4H5qmdDM0Ut24yV8olg" target="_blank">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de Natura" href="#">💬 Pedir por WhatsApp</a></div></div></article>
 <article class="card"><div class="card-img avon"></div><div class="card-body"><h3>Avon</h3><p>Maquillaje, fragancias, belleza y cuidado personal.</p><div class="actions"><a class="catalog-btn pending catlink" data-cat="avon" href="https://linktr.ee/consultoriadebellezacolombia?fbclid=IwAR6zaoQKDXobeoZlc1zPSMQ9OiQz1erLPmV934Ulq8XeWWNLVZc0wQf6jBA2hw_wapm_mzJ1aJBWSlCuzNsjAQv1Nw_waaem_8e_4H5qmdDM0Ut24yV8olg" target="_blank">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de Avon" href="#">💬 Pedir por WhatsApp</a></div></div></article>
 <article class="card"><div class="card-img boticario boticario-collage"><div class="boti-tile boti-a"></div><div class="boti-tile boti-b"></div></div><div class="card-body"><h3>O Boticário</h3><p>Perfumería y productos de belleza.</p><div class="actions"><a class="catalog-btn catlink" data-cat="boticario" href="https://www.catalogoboticario.com/2026-catalogo-colombia/cat-col-t9-sep-226/?page=1" target="_blank">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de O Boticário" href="#">💬 Pedir por WhatsApp</a></div></div></article>
-<article class="card novedades-card"><div class="card-body"><div class="novedades-panel"><h2 class="panel-title">Novedades</h2><div class="news-preview"><label id="newsPlaceholder" for="newsInput">📷<br>Imagen de la promoción actual<br><small>Toca aquí para subir o cambiar la imagen</small></label><img id="newsPhoto" alt="Promoción actual"></div><input id="newsInput" type="file" accept="image/*"><div class="news-actions"><a class="btn wa" id="newsWa" href="#">💬 Consultar novedades</a></div></div></div></article>
+<article class="card novedades-card"><div class="card-body"><div class="novedades-panel"><h2 class="panel-title">Novedades</h2><div class="news-preview"><img id="newsPhoto" alt="Promoción actual"></div><div class="news-actions"><a class="btn wa" id="newsWa" href="#">💬 Consultar novedades</a></div></div></div></article>
 
 <article class="card"><div class="card-img moda"><div class="moda-tile moda-a"></div><div class="moda-tile moda-b"></div><div class="moda-tile moda-c"></div><div class="moda-tile moda-d"></div></div><div class="card-body"><h3>Carmel · Pacifika · Loguin</h3><p>Moda para explorar en un solo pedido.</p><div class="actions"><a class="catalog-btn catlink" data-cat="moda" href="https://catalogo.carmel.com.co/2026c13/multi/c13ed01-2026/" target="_blank">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de Carmel, Pacifika y Loguin" href="#">💬 Pedir por WhatsApp</a></div></div></article>
 
@@ -222,14 +210,13 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 <section><div class="wrap"><div class="how"><h2>¿Cómo hago mi pedido?</h2><div class="steps"><div class="step"><div class="num">1</div>Mira el catálogo.</div><div class="step"><div class="num">2</div>Elige lo que te gusta.</div><div class="step"><div class="num">3</div>Escríbele a Nasly.</div><div class="step"><div class="num">4</div>Confirma tu pedido.</div></div></div></div></section>
 
 <section><div class="wrap info">
-<div class="contact-panel"><h2 class="panel-title">Contacto</h2><div class="contact-flex"><div><div class="photo-wrap"><label id="photoPlaceholder" class="photo-placeholder" for="photoInput">📷<br>Aquí irá la foto de Nasly<br><small>Toca aquí para subirla</small></label><img id="naslyPhoto"></div><input id="photoInput" type="file" accept="image/*"></div><div class="contact-data"><h3 style="font-size:24px;margin:0 0 8px">Nasly Gutiérrez Terán</h3><p>📍 Apartadó, Colombia</p><p>📱 301 748 1422</p><p>✉️ naslygutierrezteran@gmail.com</p><a class="btn wa" id="contactWa" href="#">💬 Hablar por WhatsApp</a><div class="social-row"><a class="social-btn facebook" href="https://www.facebook.com/share/1KMYdzRfwn/" target="_blank" rel="noopener" aria-label="Facebook de Nasly">f</a><a class="social-btn threads" href="https://www.threads.com/@naslygutierrezteran" target="_blank" rel="noopener" aria-label="Threads de Nasly" style="font-family:Arial,sans-serif">@</a></div></div></div></div>
+<div class="contact-panel"><h2 class="panel-title">Contacto</h2><div class="contact-flex"><div><div class="photo-wrap"><div id="photoPlaceholder" class="photo-placeholder">📷<br>Foto de Nasly</div><img id="naslyPhoto" alt="Foto de Nasly"></div></div><div class="contact-data"><h3 style="font-size:24px;margin:0 0 8px">Nasly Gutiérrez Terán</h3><p>📍 Apartadó, Colombia</p><p>📱 301 748 1422</p><p>✉️ naslygutierrezteran@gmail.com</p><a class="btn wa" id="contactWa" href="#">💬 Hablar por WhatsApp</a><div class="social-row"><a class="social-btn facebook" href="https://www.facebook.com/share/1KMYdzRfwn/" target="_blank" rel="noopener" aria-label="Facebook de Nasly">f</a><a class="social-btn threads" href="https://www.threads.com/@naslygutierrezteran" target="_blank" rel="noopener" aria-label="Threads de Nasly" style="font-family:Arial,sans-serif">@</a></div></div></div></div>
 <div class="pay-panel"><h2 class="panel-title">Formas de pago</h2>
 <div class="pay-items"><div class="pay-item">💵 Pago de contado</div><button class="pay-item nequi-toggle" id="nequiToggle" type="button" aria-expanded="false">📱 Nequi</button><div class="nequi-number" id="nequiNumber" hidden>301 748 1422</div></div>
 
 <div class="thanks-box"><div class="thanks-message">Gracias por apoyar mi emprendimiento<span class="heart">♥</span></div></div>
 </section>
 
-<section><div class="wrap"><details class="admin"><summary>⚙️ Actualizar enlaces de catálogos</summary><p>Cuando llegue una nueva campaña, aquí se podrá cambiar el enlace sin mostrar direcciones largas al cliente.</p><div class="admin-grid"><label>Natura<input id="in-natura" value="https://linktr.ee/consultoriadebellezacolombia?fbclid=IwAR6zaoQKDXobeoZlc1zPSMQ9OiQz1erLPmV934Ulq8XeWWNLVZc0wQf6jBA2hw_wapm_mzJ1aJBWSlCuzNsjAQv1Nw_waaem_8e_4H5qmdDM0Ut24yV8olg" placeholder="Pega el enlace vigente"></label><label>Avon<input id="in-avon" value="https://linktr.ee/consultoriadebellezacolombia?fbclid=IwAR6zaoQKDXobeoZlc1zPSMQ9OiQz1erLPmV934Ulq8XeWWNLVZc0wQf6jBA2hw_wapm_mzJ1aJBWSlCuzNsjAQv1Nw_waaem_8e_4H5qmdDM0Ut24yV8olg" placeholder="Pega el enlace vigente"></label><label>O Boticário<input id="in-boticario" value="https://www.catalogoboticario.com/2026-catalogo-colombia/cat-col-t9-sep-226/?page=1" placeholder="Pega el enlace vigente"></label><label>Carmel · Pacifika · Loguin<input id="in-moda" value="https://catalogo.carmel.com.co/2026c13/multi/c13ed01-2026/"></label><label>Gosén<input id="in-gosen" placeholder="Pega el enlace vigente"></label></div><br><button type="button" id="saveLinksButton" class="btn pink">Guardar enlaces en esta prueba</button></details></div></section>
 </main>
 
 <footer><div class="wrap footer-content"><div class="footer-brand">COSMÉTICOS MULTIMARCA</div><div class="footer-tag">Belleza, aromas y estilo</div><div class="footer-text">Belleza que inspira, estilo que expresa y abundancia que transforma.</div><div class="footer-verse">“Encomienda al Señor tus obras, y tus pensamientos serán afirmados.”<strong>PROVERBIOS 16:3</strong></div></div></footer>
@@ -249,42 +236,6 @@ document.getElementById('heroWa').href=makeWa('tus productos');
 const newsWa=document.getElementById('newsWa'); if(newsWa) newsWa.href='javascript:openWhatsApp('+JSON.stringify(msg)+')';
 document.getElementById('contactWa').href=makeWa('un pedido');
 document.getElementById('navWa').href=makeWa('tus productos');
-const keys=['natura','avon','boticario','moda','gosen'];
-function applyCatalogLink(k,v){
- const a=document.querySelector('[data-cat="'+k+'"]');
- if(!a)return;
- if(v){a.href=v;a.target='_blank';a.classList.remove('pending');}
- else{a.href='#';a.classList.add('pending');}
-}
-keys.forEach(k=>{
- const a=document.querySelector('[data-cat="'+k+'"]');
- const input=document.getElementById('in-'+k);
- if(!a||!input)return;
- let saved='';
- try{saved=localStorage.getItem('nasly_'+k)||'';}catch(e){}
- const current=a.getAttribute('href');
- const v=saved||(current&&current!=='#'?current:'');
- input.value=v;
- applyCatalogLink(k,v);
-});
-function saveLinks(){
- keys.forEach(k=>{
-  const input=document.getElementById('in-'+k);
-  const v=input?input.value.trim():'';
-  applyCatalogLink(k,v);
-  try{localStorage.setItem('nasly_'+k,v);}catch(e){}
- });
- alert('Enlaces actualizados correctamente.');
-}
-const saveLinksButton=document.getElementById('saveLinksButton');
-if(saveLinksButton){
- saveLinksButton.addEventListener('click',function(e){e.preventDefault();saveLinks();});
-}
-document.getElementById('photoInput').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const img=document.getElementById('naslyPhoto');img.src=URL.createObjectURL(f);img.style.display='block';document.getElementById('photoPlaceholder').style.display='none';});
-const newsInput=document.getElementById('newsInput');
-const newsPlaceholder=document.getElementById('newsPlaceholder');
-const newsPhoto=document.getElementById('newsPhoto');
-if(newsInput&&newsPlaceholder&&newsPhoto){newsInput.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;newsPhoto.src=URL.createObjectURL(f);newsPhoto.style.display='block';newsPlaceholder.style.display='none';});}
 const newsWa=document.getElementById('newsWa');
 if(newsWa){newsWa.addEventListener('click',e=>{e.preventDefault();const msg='Hola, me interesa este producto. Quisiera recibir más información.';const url='https://api.whatsapp.com/send?phone='+phone+'&text='+encodeURIComponent(msg);window.open(url,'_blank');});}
 
