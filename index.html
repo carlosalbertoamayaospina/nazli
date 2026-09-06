@@ -94,6 +94,7 @@ section{padding:52px 0}
 #naslyPhoto{width:100%;height:100%;border-radius:50%;object-fit:cover;display:none}
 .photo-placeholder{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:#fff4f7;color:#9d5571;font-size:12px;font-weight:800;padding:12px}
 .upload-photo{margin-top:12px;padding:10px 14px;border-radius:14px;border:0;background:linear-gradient(135deg,var(--fucsia),var(--vino));color:#fff;font-weight:900;cursor:pointer}
+#photoInput{display:none}
 .news .photo-wrap{width:100%;min-width:0;height:100%;padding:0;border-radius:0;background:none;box-shadow:none}
 .contact-data p{margin:7px 0;font-weight:600}
 .pay-items{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pay-item{background:rgba(255,255,255,.52);padding:15px;border-radius:17px;font-weight:800;font-size:17px}
@@ -118,6 +119,8 @@ footer:before,footer:after{position:absolute;font-size:70px;color:#f5a4bc;opacit
 .closing-sub{font-family:Georgia,serif;font-style:italic;font-size:20px;color:#ffdca0;margin:7px 0 24px;position:relative}
 .verse{max-width:650px;margin:auto;font-family:Georgia,serif;font-size:clamp(19px,3vw,25px);line-height:1.55;position:relative}
 .verse-ref{margin-top:10px;color:#ffdca0;font-weight:900;position:relative}
+.news-upload{display:block;margin:14px auto 0;width:max-content;padding:12px 18px;border-radius:14px;background:#fff;color:#8d214b;font-weight:900;cursor:pointer}
+.news-upload input{display:none}
 .nequi-number{margin:12px auto 0;padding:11px 18px;width:max-content;border-radius:14px;background:#fff7fb;color:#8d214b;font-weight:900;font-size:21px}
 .thanks-box{margin-top:18px;min-height:180px;padding:34px 42px;border-radius:22px;background:linear-gradient(135deg,#4a174d 0%,#6f2b67 48%,#9a587a 100%);text-align:center;font-family:Georgia,serif;font-style:italic;font-size:clamp(22px,3vw,30px);font-weight:700;line-height:1.18;color:#fff6fb;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.13),0 12px 30px rgba(65,17,64,.22)}
 .thanks-box::before,.thanks-box::after{content:"";position:absolute;pointer-events:none;opacity:.22;background:radial-gradient(ellipse at center,rgba(255,213,233,.75) 0 32%,transparent 34%),radial-gradient(ellipse at center,rgba(255,213,233,.5) 0 30%,transparent 32%),radial-gradient(ellipse at center,rgba(255,213,233,.38) 0 28%,transparent 30%);background-size:74px 40px,58px 34px,46px 28px;background-repeat:no-repeat}
@@ -144,16 +147,29 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 .news-preview{position:relative;min-height:280px;border-radius:20px;overflow:hidden;background:rgba(255,255,255,.72);border:2px dashed #c77b9a;display:grid;place-items:center}
 .news-preview label{width:100%;min-height:280px;display:grid;place-items:center;padding:24px;cursor:pointer;color:#8d214b;font-weight:900;font-size:17px;line-height:1.5}
 #newsPhoto{width:100%;height:100%;min-height:280px;max-height:560px;object-fit:contain;display:none;background:#fff}
+#newsInput{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .news-actions{margin-top:16px}
 
 
-/* Controles públicos: la edición se hace desde admin.html. */
-.news-preview{position:relative;min-height:230px;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#fff0f5,#ffd4e4 52%,#f8d59a);display:flex;align-items:center;justify-content:center}
-.news-preview img{display:none;width:100%;height:100%;min-height:230px;object-fit:cover}
-.news-public-placeholder{text-align:center;color:#8d214b;padding:28px;line-height:1.5}
-.news-public-placeholder:first-line{font-size:32px}
-.photo-placeholder small,.news-public-placeholder small{font-weight:600}
-
+.business-name{
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: .08em;
+  line-height: 1;
+  margin: 0 0 .45rem 0;
+  background: linear-gradient(90deg, #4f5b2a 0%, #66733a 68%, #b49a52 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero h1.metal{
+  font-size: clamp(2.6rem, 6vw, 5.1rem);
+}
+@media (max-width: 640px){
+  .business-name{font-size:2rem;}
+  .hero h1.metal{font-size:2.5rem;}
+}
 </style>
 
 
@@ -162,6 +178,7 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 .card.novedades-card .card-body{width:100%;display:flex;flex-direction:column}
 .card.novedades-card .novedades-panel{width:100%;height:100%;display:flex;flex-direction:column}
 .card.novedades-card .news-preview{flex:1;min-height:220px}
+.card.novedades-card #newsInput{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 .card.novedades-card .news-actions{margin-top:auto}
 </style>
 
@@ -174,7 +191,8 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 <div class="wrap hero-grid">
 <div>
 <div class="kicker">Belleza · perfumería · moda</div>
-<h1 class="metal">Cosméticos<br>Multimarca</h1>
+<div class="business-name">GOSÉN</div>
+    <h1 class="metal">Cosméticos<br>Multimarca</h1>
 <div class="tagline">Belleza, aromas y estilo</div>
 
 <div class="owner-name">Nasly Gutiérrez Terán</div>
@@ -193,10 +211,9 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 <article class="card"><div class="card-img natura"></div><div class="card-body"><h3>Natura</h3><p>Belleza, cuidado personal, aromas y bienestar.</p><div class="actions"><a class="catalog-btn pending catlink" data-cat="natura" href="https://linktr.ee/consultoriadebellezacolombia?fbclid=IwAR6zaoQKDXobeoZlc1zPSMQ9OiQz1erLPmV934Ulq8XeWWNLVZc0wQf6jBA2hw_wapm_mzJ1aJBWSlCuzNsjAQv1Nw_waaem_8e_4H5qmdDM0Ut24yV8olg" target="_blank">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de Natura" href="#">💬 Pedir por WhatsApp</a></div></div></article>
 <article class="card"><div class="card-img avon"></div><div class="card-body"><h3>Avon</h3><p>Maquillaje, fragancias, belleza y cuidado personal.</p><div class="actions"><a class="catalog-btn pending catlink" data-cat="avon" href="https://linktr.ee/consultoriadebellezacolombia?fbclid=IwAR6zaoQKDXobeoZlc1zPSMQ9OiQz1erLPmV934Ulq8XeWWNLVZc0wQf6jBA2hw_wapm_mzJ1aJBWSlCuzNsjAQv1Nw_waaem_8e_4H5qmdDM0Ut24yV8olg" target="_blank">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de Avon" href="#">💬 Pedir por WhatsApp</a></div></div></article>
 <article class="card"><div class="card-img boticario boticario-collage"><div class="boti-tile boti-a"></div><div class="boti-tile boti-b"></div></div><div class="card-body"><h3>O Boticário</h3><p>Perfumería y productos de belleza.</p><div class="actions"><a class="catalog-btn catlink" data-cat="boticario" href="https://www.catalogoboticario.com/2026-catalogo-colombia/cat-col-t9-sep-226/?page=1" target="_blank">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de O Boticário" href="#">💬 Pedir por WhatsApp</a></div></div></article>
-<article class="card novedades-card"><div class="card-body"><div class="novedades-panel"><h2 class="panel-title">Novedades</h2><div class="news-preview" id="newsPreview"><div id="newsPlaceholder" class="news-public-placeholder">✨<br><strong>Novedades y promociones</strong><br><small>Consulta las novedades vigentes con Nasly.</small></div><img id="newsPhoto" alt="Promoción actual"></div><div class="news-actions"><a class="btn wa" id="newsWa" href="#">💬 Consultar novedades</a></div></div></div></article>
+<article class="card novedades-card"><div class="card-body"><div class="novedades-panel"><h2 class="panel-title">Novedades</h2><div class="news-preview"><label id="newsPlaceholder" for="newsInput">📷<br>Imagen de la promoción actual<br><small>Toca aquí para subir o cambiar la imagen</small></label><img id="newsPhoto" alt="Promoción actual"></div><input id="newsInput" type="file" accept="image/*"><div class="news-actions"><a class="btn wa" id="newsWa" href="#">💬 Consultar novedades</a></div></div></div></article>
 
 <article class="card"><div class="card-img moda"><div class="moda-tile moda-a"></div><div class="moda-tile moda-b"></div><div class="moda-tile moda-c"></div><div class="moda-tile moda-d"></div></div><div class="card-body"><h3>Carmel · Pacifika · Loguin</h3><p>Moda para explorar en un solo pedido.</p><div class="actions"><a class="catalog-btn catlink" data-cat="moda" href="https://catalogo.carmel.com.co/2026c13/multi/c13ed01-2026/" target="_blank">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de Carmel, Pacifika y Loguin" href="#">💬 Pedir por WhatsApp</a></div></div></article>
-<article class="card"><div class="card-img gosen"></div><div class="card-body"><h3>Gosén</h3><p>Productos para descubrir y disfrutar.</p><div class="actions"><a class="catalog-btn pending catlink" data-cat="gosen" href="#">Ver catálogo</a><a class="btn wa wbtn" data-text="productos de Gosén" href="#">💬 Pedir por WhatsApp</a></div></div></article>
 
 </div></div></section>
 
@@ -205,123 +222,80 @@ footer .footer-brand,footer .footer-tag,footer .footer-text{position:relative;z-
 <section><div class="wrap"><div class="how"><h2>¿Cómo hago mi pedido?</h2><div class="steps"><div class="step"><div class="num">1</div>Mira el catálogo.</div><div class="step"><div class="num">2</div>Elige lo que te gusta.</div><div class="step"><div class="num">3</div>Escríbele a Nasly.</div><div class="step"><div class="num">4</div>Confirma tu pedido.</div></div></div></div></section>
 
 <section><div class="wrap info">
-<div class="contact-panel"><h2 class="panel-title">Contacto</h2><div class="contact-flex"><div><div class="photo-wrap"><div id="photoPlaceholder" class="photo-placeholder">📷<br>Foto de Nasly<br><small>Cargando…</small></div><img id="naslyPhoto" alt="Nasly Gutiérrez Terán"></div></div><div class="contact-data"><h3 style="font-size:24px;margin:0 0 8px">Nasly Gutiérrez Terán</h3><p>📍 Apartadó, Colombia</p><p>📱 301 748 1422</p><p>✉️ naslygutierrezteran@gmail.com</p><a class="btn wa" id="contactWa" href="#">💬 Hablar por WhatsApp</a><div class="social-row"><a class="social-btn facebook" href="https://www.facebook.com/share/1KMYdzRfwn/" target="_blank" rel="noopener" aria-label="Facebook de Nasly">f</a><a class="social-btn threads" href="https://www.threads.com/@naslygutierrezteran" target="_blank" rel="noopener" aria-label="Threads de Nasly" style="font-family:Arial,sans-serif">@</a></div></div></div></div>
+<div class="contact-panel"><h2 class="panel-title">Contacto</h2><div class="contact-flex"><div><div class="photo-wrap"><label id="photoPlaceholder" class="photo-placeholder" for="photoInput">📷<br>Aquí irá la foto de Nasly<br><small>Toca aquí para subirla</small></label><img id="naslyPhoto"></div><input id="photoInput" type="file" accept="image/*"></div><div class="contact-data"><h3 style="font-size:24px;margin:0 0 8px">Nasly Gutiérrez Terán</h3><p>📍 Apartadó, Colombia</p><p>📱 301 748 1422</p><p>✉️ naslygutierrezteran@gmail.com</p><a class="btn wa" id="contactWa" href="#">💬 Hablar por WhatsApp</a><div class="social-row"><a class="social-btn facebook" href="https://www.facebook.com/share/1KMYdzRfwn/" target="_blank" rel="noopener" aria-label="Facebook de Nasly">f</a><a class="social-btn threads" href="https://www.threads.com/@naslygutierrezteran" target="_blank" rel="noopener" aria-label="Threads de Nasly" style="font-family:Arial,sans-serif">@</a></div></div></div></div>
 <div class="pay-panel"><h2 class="panel-title">Formas de pago</h2>
 <div class="pay-items"><div class="pay-item">💵 Pago de contado</div><button class="pay-item nequi-toggle" id="nequiToggle" type="button" aria-expanded="false">📱 Nequi</button><div class="nequi-number" id="nequiNumber" hidden>301 748 1422</div></div>
 
 <div class="thanks-box"><div class="thanks-message">Gracias por apoyar mi emprendimiento<span class="heart">♥</span></div></div>
 </section>
 
+<section><div class="wrap"><details class="admin"><summary>⚙️ Actualizar enlaces de catálogos</summary><p>Cuando llegue una nueva campaña, aquí se podrá cambiar el enlace sin mostrar direcciones largas al cliente.</p><div class="admin-grid"><label>Natura<input id="in-natura" value="https://linktr.ee/consultoriadebellezacolombia?fbclid=IwAR6zaoQKDXobeoZlc1zPSMQ9OiQz1erLPmV934Ulq8XeWWNLVZc0wQf6jBA2hw_wapm_mzJ1aJBWSlCuzNsjAQv1Nw_waaem_8e_4H5qmdDM0Ut24yV8olg" placeholder="Pega el enlace vigente"></label><label>Avon<input id="in-avon" value="https://linktr.ee/consultoriadebellezacolombia?fbclid=IwAR6zaoQKDXobeoZlc1zPSMQ9OiQz1erLPmV934Ulq8XeWWNLVZc0wQf6jBA2hw_wapm_mzJ1aJBWSlCuzNsjAQv1Nw_waaem_8e_4H5qmdDM0Ut24yV8olg" placeholder="Pega el enlace vigente"></label><label>O Boticário<input id="in-boticario" value="https://www.catalogoboticario.com/2026-catalogo-colombia/cat-col-t9-sep-226/?page=1" placeholder="Pega el enlace vigente"></label><label>Carmel · Pacifika · Loguin<input id="in-moda" value="https://catalogo.carmel.com.co/2026c13/multi/c13ed01-2026/"></label><label>Gosén<input id="in-gosen" placeholder="Pega el enlace vigente"></label></div><br><button type="button" id="saveLinksButton" class="btn pink">Guardar enlaces en esta prueba</button></details></div></section>
 </main>
 
 <footer><div class="wrap footer-content"><div class="footer-brand">COSMÉTICOS MULTIMARCA</div><div class="footer-tag">Belleza, aromas y estilo</div><div class="footer-text">Belleza que inspira, estilo que expresa y abundancia que transforma.</div><div class="footer-verse">“Encomienda al Señor tus obras, y tus pensamientos serán afirmados.”<strong>PROVERBIOS 16:3</strong></div></div></footer>
 
 
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
 <script>
 const phone='573017481422';
 const makeWa=t=>'javascript:openWhatsApp('+JSON.stringify(t)+')';
 function openWhatsApp(t){
-  const msg='Hola Nasly 😊 Vi tu página y quiero consultar sobre '+t+'.';
-  const app='whatsapp://send?phone='+phone+'&text='+encodeURIComponent(msg);
-  window.location.href=app;
-  setTimeout(()=>{
-    if(document.visibilityState==='visible'){
-      window.open('https://api.whatsapp.com/send?phone='+phone+'&text='+encodeURIComponent(msg),'_blank','noopener');
-    }
-  },900);
+ const msg='Hola Nasly 😊 Vi tu página y quiero consultar sobre '+t+'.';
+ const app='whatsapp://send?phone='+phone+'&text='+encodeURIComponent(msg);
+ window.location.href=app;
+ setTimeout(()=>{ if(document.visibilityState==='visible'){ window.open('https://api.whatsapp.com/send?phone='+phone+'&text='+encodeURIComponent(msg),'_blank'); }},900);
 }
 document.querySelectorAll('.wbtn').forEach(a=>a.href=makeWa(a.dataset.text));
 document.getElementById('heroWa').href=makeWa('tus productos');
+const newsWa=document.getElementById('newsWa'); if(newsWa) newsWa.href='javascript:openWhatsApp('+JSON.stringify(msg)+')';
 document.getElementById('contactWa').href=makeWa('un pedido');
-document.getElementById('newsWa').href=makeWa('las novedades y promociones');
-
-const defaults={
-  natura:'https://linktr.ee/consultoriadebellezacolombia',
-  avon:'https://linktr.ee/consultoriadebellezacolombia',
-  boticario:'https://www.catalogoboticario.com/2026-catalogo-colombia/cat-col-t9-sep-226/?page=1',
-  moda:'https://catalogo.carmel.com.co/2026c13/multi/c13ed01-2026/',
-  gosen:''
-};
-const keys=Object.keys(defaults);
-
+document.getElementById('navWa').href=makeWa('tus productos');
+const keys=['natura','avon','boticario','moda','gosen'];
 function applyCatalogLink(k,v){
-  const a=document.querySelector('[data-cat="'+k+'"]');
-  if(!a)return;
-  if(v){
-    a.href=v;a.target='_blank';a.classList.remove('pending');
-    a.style.pointerEvents='';a.style.opacity='';
-  }else{
-    a.removeAttribute('href');a.classList.add('pending');
-    a.style.pointerEvents='none';a.style.opacity='.7';
-  }
+ const a=document.querySelector('[data-cat="'+k+'"]');
+ if(!a)return;
+ if(v){a.href=v;a.target='_blank';a.classList.remove('pending');}
+ else{a.href='#';a.classList.add('pending');}
 }
-function isValidHttpUrl(v){
-  if(!v)return true;
-  try{
-    const u=new URL(v);
-    return u.protocol==='http:'||u.protocol==='https:';
-  }catch{return false;}
-}
-function applyPhoto(url){
-  const img=document.getElementById('naslyPhoto');
-  const ph=document.getElementById('photoPlaceholder');
-  if(url){
-    img.src=url;
-    img.style.display='block';
-    ph.style.display='none';
-  }else{
-    img.removeAttribute('src');
-    img.style.display='none';
-    ph.style.display='flex';
-    ph.innerHTML='📷<br>Foto de Nasly<br><small>Aún no se ha cargado.</small>';
-  }
-}
-function applyNews(url){
-  const box=document.getElementById('newsPreview');
-  const img=document.getElementById('newsPhoto');
-  const ph=document.getElementById('newsPlaceholder');
-  if(url){
-    img.src=url;
-    img.style.display='block';
-    ph.style.display='none';
-    box.classList.add('has-image');
-  }else{
-    img.removeAttribute('src');
-    img.style.display='none';
-    ph.style.display='flex';
-    box.classList.remove('has-image');
-  }
-}
-async function loadPublicSettings(){
-  if(typeof supabaseClient==='undefined')return;
-  try{
-    const {data,error}=await supabaseClient
-      .from('nasly_site_settings')
-      .select('*')
-      .eq('id',1)
-      .maybeSingle();
-    if(error)throw error;
-    if(!data)return;
-    keys.forEach(k=>applyCatalogLink(k,data[k+'_url']||defaults[k]));
-    applyPhoto(data.profile_photo_url||'');
-    applyNews(data.news_image_url||'');
-  }catch(err){
-    console.warn('No fue posible cargar la configuración remota:',err);
-    keys.forEach(k=>applyCatalogLink(k,defaults[k]));
-  }
-}
-document.addEventListener('DOMContentLoaded',loadPublicSettings);
-
-document.addEventListener("DOMContentLoaded",function(){
-  const b=document.getElementById("nequiToggle"),n=document.getElementById("nequiNumber");
-  if(b&&n)b.addEventListener("click",function(){
-    const open=n.hasAttribute("hidden");
-    if(open){n.removeAttribute("hidden");b.setAttribute("aria-expanded","true");}
-    else{n.setAttribute("hidden","");b.setAttribute("aria-expanded","false");}
-  });
+keys.forEach(k=>{
+ const a=document.querySelector('[data-cat="'+k+'"]');
+ const input=document.getElementById('in-'+k);
+ if(!a||!input)return;
+ let saved='';
+ try{saved=localStorage.getItem('nasly_'+k)||'';}catch(e){}
+ const current=a.getAttribute('href');
+ const v=saved||(current&&current!=='#'?current:'');
+ input.value=v;
+ applyCatalogLink(k,v);
 });
+function saveLinks(){
+ keys.forEach(k=>{
+  const input=document.getElementById('in-'+k);
+  const v=input?input.value.trim():'';
+  applyCatalogLink(k,v);
+  try{localStorage.setItem('nasly_'+k,v);}catch(e){}
+ });
+ alert('Enlaces actualizados correctamente.');
+}
+const saveLinksButton=document.getElementById('saveLinksButton');
+if(saveLinksButton){
+ saveLinksButton.addEventListener('click',function(e){e.preventDefault();saveLinks();});
+}
+document.getElementById('photoInput').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const img=document.getElementById('naslyPhoto');img.src=URL.createObjectURL(f);img.style.display='block';document.getElementById('photoPlaceholder').style.display='none';});
+const newsInput=document.getElementById('newsInput');
+const newsPlaceholder=document.getElementById('newsPlaceholder');
+const newsPhoto=document.getElementById('newsPhoto');
+if(newsInput&&newsPlaceholder&&newsPhoto){newsInput.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;newsPhoto.src=URL.createObjectURL(f);newsPhoto.style.display='block';newsPlaceholder.style.display='none';});}
+const newsWa=document.getElementById('newsWa');
+if(newsWa){newsWa.addEventListener('click',e=>{e.preventDefault();const msg='Hola, me interesa este producto. Quisiera recibir más información.';const url='https://api.whatsapp.com/send?phone='+phone+'&text='+encodeURIComponent(msg);window.open(url,'_blank');});}
+
+
+
+
+</script>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){const b=document.getElementById("nequiToggle"),n=document.getElementById("nequiNumber");if(b&&n)b.addEventListener("click",function(){const open=n.hasAttribute("hidden");if(open){n.removeAttribute("hidden");b.setAttribute("aria-expanded","true");}else{n.setAttribute("hidden","");b.setAttribute("aria-expanded","false");}});});
 </script>
 </body></html>
